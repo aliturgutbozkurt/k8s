@@ -1,0 +1,53 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: springbootapps.apps.eli5.io
+spec:
+  group: apps.eli5.io
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                image:
+                  type: string
+                replicas:
+                  type: integer
+                  minimum: 1
+                  maximum: 20
+                port:
+                  type: integer
+                  default: 8080
+                envMessage:
+                  type: string
+            status:
+              type: object
+              properties:
+                availableReplicas:
+                  type: integer
+                phase:
+                  type: string
+  scope: Namespaced
+  names:
+    plural: springbootapps
+    singular: springbootapp
+    kind: SpringBootApp
+    shortNames:
+      - sba
+---
+apiVersion: apps.eli5.io/v1alpha1
+kind: SpringBootApp
+metadata:
+  name: my-coffee-service
+  namespace: coffee-shop
+spec:
+  image: "ghcr.io/eli5-k8s/spring-boot-k8s-eli5:1.0.0"
+  replicas: 3
+  port: 8080
+  envMessage: "Operator tarafından yönetilen akıllı Spring Boot Pod'u!"

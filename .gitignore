@@ -1,0 +1,12 @@
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Build artifacts & temp logs
+*.log
+examples/spring-boot-app/target/
+.idea/
+*.class
+
+# Keep all PDFs in output/ (they are the published materials!)
+!output/**/*.pdf

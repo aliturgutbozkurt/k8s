@@ -1,0 +1,26 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: k8s-eli5-fleet
+  namespace: flux-system
+spec:
+  interval: 1m0s # Her 1 dakikada bir GitHub'ı kontrol et
+  url: https://github.com/my-org/k8s-gitops-fleet
+  ref:
+    branch: main
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: spring-boot-coffee
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  targetNamespace: coffee-shop
+  sourceRef:
+    kind: GitRepository
+    name: k8s-eli5-fleet
+  path: ./clusters/production/coffee-app
+  prune: true # Git'ten silinen kaynak K8s kümesinden de otomatik çöp toplayıcı gibi temizlensin!
+  wait: true
+  timeout: 2m

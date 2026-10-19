@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: coffee-route
+  namespace: coffee-shop
+spec:
+  to:
+    kind: Service
+    name: coffee-service
+  port:
+    targetPort: http
+  tls:
+    termination: edge # OpenShift otomatik SSL/TLS sertifikasını Router seviyesinde sonlandırır!
+    insecureEdgeTerminationPolicy: Redirect
