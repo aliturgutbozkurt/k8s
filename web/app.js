@@ -17,6 +17,33 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnClosePdfModal = document.getElementById('btnClosePdfModal');
   const modalModulePdfList = document.getElementById('modalModulePdfList');
   const langButtons = document.querySelectorAll('.lang-btn');
+  const themeToggleBtn = document.getElementById('themeToggleBtn');
+
+  // Theme Management (Defaults to Light Mode)
+  function initTheme() {
+    const savedTheme = localStorage.getItem('k8s_theme') || 'light';
+    applyTheme(savedTheme);
+
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', () => {
+        const isDark = document.body.classList.contains('theme-dark');
+        applyTheme(isDark ? 'light' : 'dark');
+      });
+    }
+  }
+
+  function applyTheme(theme) {
+    if (theme === 'dark') {
+      document.body.classList.add('theme-dark');
+      if (themeToggleBtn) themeToggleBtn.textContent = '🌙 Koyu';
+    } else {
+      document.body.classList.remove('theme-dark');
+      if (themeToggleBtn) themeToggleBtn.textContent = '☀️ Açık';
+    }
+    localStorage.setItem('k8s_theme', theme);
+  }
+
+  initTheme();
 
   // Module Icons
   const moduleIcons = {
